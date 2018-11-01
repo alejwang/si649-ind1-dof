@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DoF Calculation</title>
+    <link rel="stylesheet" href="css/skeleton.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="js/draw.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+    <script src="https://unpkg.com/d3-simple-slider/build/d3-simple-slider.js"></script>
+    <div class="container">
+        <div class="row centered">
+            <div class="ten columns offset-by-one alpha centered" style="margin-bottom:30px;">
+                <h1>DoF Calculation</h1>
+                <h4>...</h4>
+            </div>
+        </div>
+        <!-- <div class="row centered">
+            <div class="ten columns offset-by-one alpha" style="margin-bottom:30px;">
+                <p class="centered">Filter by:
+                <input type="checkbox" name="filter" value="all" id="all" onClick="filterDataForAll()" checked>All
+                <input type="checkbox" name="filter" value="chocolate" id="chocolate" onClick="filterData()" checked>Chocolate
+                <input type="checkbox" name="filter" value="fruity" id="fruity" onClick="filterData()" checked>Fruity
+                <input type="checkbox" name="filter" value="caramel" id="caramel" onClick="filterData()" checked>Caramel
+                <input type="checkbox" name="filter" value="peanutyalmondy" id="peanutyalmondy" onClick="filterData()" checked>Peanutyalmondy
+                <input type="checkbox" name="filter" value="nougat" id="nougat" onClick="filterData()" checked>Nougat
+                <input type="checkbox" name="filter" value="crispedricewafer" id="crispedricewafer" onClick="filterData()" checked>crispedricewafer
+                </p>
+            </div>
+        </div>
+        <div class="row centered">
+            <div class="ten columns offset-by-one alpha centered centered" style="margin-bottom:30px;">
+                <p class="centered">Sort by:
+                <button id="btn_rank" value="rank" class="button" onClick="sortData('rank')">Rank</button>
+                <button id="btn_price" value="price" class="button" onClick="sortData('price')">Price</button>
+                <button id="btn_sugar" value="sugar" class="button" onClick="sortData('sugar')">Sugar Content</button>
+                </p>
+            </div>
+        </div> -->
+
+        <div class="row centered">
+          <svg width="950" height="400" id="diagram1"> 
+              <line x1="100" y1="200" x2="850" y2="200" stroke="grey" stroke-width="1"/> 
+          </svg>
+          <!-- <div class="col-sm-2"> -->
+          <p id="value1"></p>
+          <!-- </div> -->
+          <!-- <div class="col-sm"> -->
+            <div id="slider1"></div>
+          <!-- </div> -->
+        </div>
+      </div>
+</body>
+</html>
