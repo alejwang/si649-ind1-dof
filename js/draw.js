@@ -3,6 +3,7 @@ var origin_data = [];
 
 $(document).ready(function () {
     // loadData();
+    init();
     drawDiagram1();
 });
 
@@ -20,83 +21,99 @@ $(document).ready(function () {
 // }
 
 var lensApeture = 30;
-var distance = 1000;
-var focal = 50;
+var lY = function(y){ return ???}
+var distance = 1000; // max:3000 400+(distance/7.5) -> 800
+var dX = function(x){ return 400 + x / 7.5; };
+var focal = 50; // 200@50 350@200 150+focal
+var fX = function(x){ return 150 + focal/3; };
 var cmosSize = 10; // can't change
 var coc = 0.029; // can't change
-
 var hyperFocal = 61576;
-var nearPoint = 1015
+var nearPoint = 1015;
 
-function calculate(){
+
+function updateData(){
     hyperFocal = focal * focal / lensApeture / coc
     nearPoint = (hyperFocal * distance) / (hyperFocal + distance - focal)
     farPoint = (hyperFocal * distance) / (hyperFocal + distance - focal)
+    // distanceLoc =
 }
 
 
 function init() {
-    var slider1 = d3.sliderHorizontal()
-        .min(500) //d3.min(data1)
-        .max(3000)
-        .width(300)
-        // .tickFormat(d3.format('.2%'))
-        .step(10)
-        .ticks(10)
-        .default(1000)
+    var sliderDistance = d3.sliderHorizontal().min(500).max(3000)
+        .width(300).step(10).ticks(10).default(1000)
         .on('onchange', val => {
-          d3.select("p#value1").text(val);
+          d3.select("span#valueDistance").text(val);
           distance = val;
           drawDiagram1(update=true);
-          // console.log(distance);
         });
-   var group1 = d3.select("div#slider1").append("svg")
-       .attr("width", 500)
-       .attr("height", 100)
-       .append("g")
-       .attr("transform", "translate(30,30)");
+    var groupDistance = d3.select("div#sliderDistance").append("svg")
+       .attr("width", 500) .attr("height", 100)
+       .append("g") .attr("transform", "translate(30,30)");
+    groupDistance.call(sliderDistance);
+    d3.select("span#valueDistance").text(sliderDistance.value())
+    // d3.select("a#setValueDistance").on("click", () => { sliderDistance.value(5); d3.event.preventDefault(); });
 
-    group1.call(slider1);
-    d3.select("p#value1").text(slider1.value())
-    d3.select("a#setValue1").on("click", () => { slider1.value(5); d3.event.preventDefault(); });
+    var sliderFocal = d3.sliderHorizontal().min(20).max(200)
+        .width(300).step(1).ticks(20).default(50)
+        .on('onchange', val => {
+          d3.select("span#valueFocal").text(val);
+          focal = val;
+          drawDiagram1(update=true);
+        });
+    var groupFocal = d3.select("div#sliderFocal").append("svg")
+       .attr("width", 500) .attr("height", 100)
+       .append("g") .attr("transform", "translate(30,30)");
+    groupFocal.call(sliderFocal);
+    d3.select("span#valueFocal").text(sliderFocal.value())
+    // d3.select("a#setValueDistance").on("click", () => { sliderFocal.value(5); d3.event.preventDefault(); });
 }
 
 function drawDiagram1(update) {
 
     var svg = d3.select("#diagram1");
+    var lightsData = [-1, -0.7, -0.3, 0.3, 0.7, 1];
+
     if (update) {
+      var lens = svg.select('.lens')
+                    .transition()
+                    .duration(300)
+                    .delay(200)
+                    .attr('x1', fX(focal)) .attr('x2', fX(focal))
+                    .attr('y1', 200-lensApeture) .attr('y2', 200+lensApeture)
+
       var lightsFront = svg.selectAll('.lightsFront')
-                            .transition()
-                            .duration(300)
-                            .delay(200)
-                            .attr('x1', 200+(distance/10))
+                            .transition().duration(300).delay(200)
+                            .attr('x1', dX(distance)) .attr('x2', fX(focal))
+
+      var lightsBack = svg.selectAll('.lightsBack')
+                      .transition().duration(300).delay(200)
+                      .attr('x2', fX(focal)) .attr('y2', function(d){ return 200 + d * lensApeture })
+                      .attr('x1', 100) .attr('y1', 200)
 
     } else {
-      var lens = svg.append('line')
-                    .attr('class', 'lens')
-                    .attr('x1', 700) .attr('x2', 700)
+      var lens = svg.append('line') .attr('class', 'lens')
+                    .attr('x1', fX(focal)) .attr('x2', fX(focal))
                     .attr('y1', 200-lensApeture) .attr('y2', 200+lensApeture)
                     .attr('stroke', "blue")
                     .attr('stroke-width', "4");
 
-      var cmos = svg.append('line')
-                    .attr('class', 'lens')
-                    .attr('x1', 850) .attr('x2', 850)
+      var cmos = svg.append('line') .attr('class', 'lens')
+                    .attr('x1', 100) .attr('x2', 100)
                     .attr('y1', 200-cmosSize) .attr('y2', 200+cmosSize)
                     .attr('stroke', "blue")
                     .attr('stroke-width', "4");
 
-      var lightsData = [-1, -0.7, -0.3, 0.3, 0.7, 1];
-
       var lightsFront = svg.selectAll('.lightsFront').data(lightsData).enter().append('line')
                       .attr('class', 'lightsFront')
-                      .attr('x1', 300) .attr('x2', 700)
+                      .attr('x1', dX(distance)) .attr('x2', fX(focal))
                       .attr('y1', 200) .attr('y2', function(d){ return 200 + d * lensApeture })
                       .attr('stroke', "green")
                       .attr('stroke-width', "1");
       var lightsBack = svg.selectAll('.lightsBack').data(lightsData).enter().append('line')
                       .attr('class', 'lightsBack')
-                      .attr('x1', 850) .attr('x2', 700)
+                      .attr('x1', 100) .attr('x2', fX(focal))
                       .attr('y1', 200) .attr('y2', function(d){ return 200 + d * lensApeture })
                       .attr('stroke', "green")
                       .attr('stroke-width', "1");
