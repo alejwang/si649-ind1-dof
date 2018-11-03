@@ -1,23 +1,63 @@
-body {
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+body, text {
     background: #f7f7f7;
-    font-family: sans-serif, 'Inconsolata', Monaco, "Lucida Console", Consolas, "Courier New";
+    font-family: 'Montserrat', sans-serif, 'Inconsolata', Monaco, "Lucida Console", Consolas, "Courier New";
+    color: #333;
 }
 
-.container{
-    padding:10px;
-}
 
 h1{
     color:#404040;
     font-size:36px;
-    text-align: center;
+    /* text-align: center; */
     font-weight: bold;
 }
 
+h3{
+    color:#404040;
+    font-size:26px;
+    /* text-align: center; */
+    font-weight: bold;
+    margin-top: 3em;
+}
+
 h4{
+
     color:#DDDDDD;
     font-size: 20px;
     text-align: center;
+}
+
+.note {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 4em;
+}
+.container{
+    padding:10px;
+}
+
+img {
+  width: 100%;
+}
+
+.row {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.row span {
+  font-weight: bold;
+}
+
+.sliders p{
+  margin: 0;
+}
+.slider {
+  height: 120px;
+  display: inline-block;
+  /* margin-bottom: -30px; */
 }
 .filter {
   margin: 0 1em;
@@ -32,13 +72,13 @@ h4{
     min-height:200px;
     margin-bottom:30px;
 } */
-#diagram1{
+.diagram{
     width: 950px;
-    height: 400px;
+    height: 350px;
     margin: 0 auto;
     text-align: center;
     /* border: 1px solid grey; */
-    background: #DDD;
+    background: #EEE;
 }
 
 .chartholder{

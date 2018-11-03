@@ -1,59 +1,146 @@
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <title>DoF Calculation</title>
-    <link rel="stylesheet" href="css/skeleton.css" />
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/style.css" />
+  <title>DoF Calculation</title>
+  <link rel="stylesheet" href="css/skeleton.css" />
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-            crossorigin="anonymous"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="js/draw.js"></script>
-    <script src="https://d3js.org/topojson.v2.min.js"></script>
-    <script src="https://unpkg.com/d3-simple-slider/build/d3-simple-slider.js"></script>
-    <div class="container">
-        <div class="row centered">
-            <div class="ten columns offset-by-one alpha centered" style="margin-bottom:30px;">
-                <h1>DoF Calculation</h1>
-                <h4>...</h4>
-            </div>
-        </div>
-        <!-- <div class="row centered">
-            <div class="ten columns offset-by-one alpha" style="margin-bottom:30px;">
-                <p class="centered">Filter by:
-                <input type="checkbox" name="filter" value="all" id="all" onClick="filterDataForAll()" checked>All
-                <input type="checkbox" name="filter" value="chocolate" id="chocolate" onClick="filterData()" checked>Chocolate
-                <input type="checkbox" name="filter" value="fruity" id="fruity" onClick="filterData()" checked>Fruity
-                <input type="checkbox" name="filter" value="caramel" id="caramel" onClick="filterData()" checked>Caramel
-                <input type="checkbox" name="filter" value="peanutyalmondy" id="peanutyalmondy" onClick="filterData()" checked>Peanutyalmondy
-                <input type="checkbox" name="filter" value="nougat" id="nougat" onClick="filterData()" checked>Nougat
-                <input type="checkbox" name="filter" value="crispedricewafer" id="crispedricewafer" onClick="filterData()" checked>crispedricewafer
-                </p>
-            </div>
-        </div>
-        <div class="row centered">
-            <div class="ten columns offset-by-one alpha centered centered" style="margin-bottom:30px;">
-                <p class="centered">Sort by:
-                <button id="btn_rank" value="rank" class="button" onClick="sortData('rank')">Rank</button>
-                <button id="btn_price" value="price" class="button" onClick="sortData('price')">Price</button>
-                <button id="btn_sugar" value="sugar" class="button" onClick="sortData('sugar')">Sugar Content</button>
-                </p>
-            </div>
-        </div> -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript" src="js/draw.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="https://unpkg.com/d3-simple-slider/build/d3-simple-slider.js"></script>
+  <div class="container">
+    <div class="row">
+      <div class="ten columns offset-by-one alpha">
+        <h1>DoF Calculation</h1>
+      </div>
+      <div class="ten columns offset-by-one alpha">
+        <h3>What's the key to magic photos? <br> - Depth of fields!</h3>
+        <p>You've heard the advice a million times: "Master depth of field, and your photos will magically look much better." Depth of field is a key compositional element in many, if not most, photographs. It is one of the most important tools a
+          photographer can use to create striking images. And it's true - using depth of field the right way is very powerful. It can radically transform good photos into images that win hearts and minds.</p>
+      </div>
+      <div class="row centered">
+        <img src="https://www.photopills.com/sites/default/files/articles/2015/dof-bokeh4-th.jpg" alt="Girl near the lake">
+        <p class="note">Nikon D4s | 200mm | f/1.4 | 1/640s | ISO 100 | 5650K | Original from Photopills</p>
 
-        <div class="row centered">
-          <svg width="950" height="400" id="diagram1">
-              <line x1="100" y1="200" x2="850" y2="200" stroke="grey" stroke-width="1"/>
-          </svg>
+      </div>
+      <div class="ten columns offset-by-one alpha">
+        <p>In this photo, the girl is clear while the foreground and the background are vague. So when you see it, you will be attractted by the girl in the center and get inspired - what is she doing there. But you can imagine what if all the
+          things on this photo are super clear with details.</p>
+      </div>
 
-          <div id="sliderDistance" style="display:inline-block;"><p> Distance (500-3000mm): <span id="valueDistance"></span></p></div>
-          <div id="sliderFocal" style="display:inline-block;"><p> Focal (20-200mm): <span id="valueFocal"></span></p></div>
+      <div class="ten columns offset-by-one alpha">
+        <h3>Why DoF exsits? <br> - Focus! </h3>
+        <p>Due to the fact that a camera can precisely focus the lens at only one distance at a time, sharpness gradually decreases on each side of the focused distance or, if you prefer, the plane of focus (PoF).</p>
 
+        <p>As a result, depth of field (DoF) is the distance between the nearest and furthest elements in a scene that appear to be <span> acceptably sharp </span>in an image.</p>
+
+        <p>Let's simulate what's happened during capturing a moving dot using your iPhone. First, let's pretent your iPhone is focusing on the plane 1 meter away from you.</p>
+      </div>
+
+      <div class="row centered">
+        <svg class="diagram" id="diagram1">
+          <defs>
+            <filter id="f1" x="0" y="0">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+            </filter>
+          </defs>
+          <line x1="300" x2="850" y1="200" y2="200" stroke="#DDD" stroke-width="1"></line>
+        </svg>
+
+        <p class="note"> Focus Length <span class="distanceC" id="distanceC1">1000</span> mm | Distance to the dot <span class="distanceF" id="distanceF1">3000</span> mm </p>
+
+        <div class="sliders">
+          <div class="slider sliderDistanceF" id="sliderDistanceF1">
+            <p> Distance to person <span class="valueDistanceF" id="valueDistanceF1"></span> mm</p>
+          </div>
         </div>
       </div>
+
+      <div class="ten columns offset-by-one alpha">
+        <p>Depending on if the lights through the lens can or can't be focused on the camera sensor, you will get a clear or blur dot on your screen.</p>
+
+        <p>But you can notice there's a range around the focus plane where you always get a super clear dot. The reason is your camera sensor is strong enough to tolerate some imprecision. If all the lights still land on the sensor, even not on one
+          point, the camera can still analysis them to make the photo clear. But if some lights miss the sensor, the photo will lose some details - translate: that area will be blur or 'blurer'. </p>
+
+        <p>Let's simulate what's happened during capturing a moving dot using your iPhone. First, let's pretent your iPhone is focusing on the plane 1 meter away from you.</p>
+      </div>
+
+      <div class="ten columns offset-by-one alpha">
+        <h3>What affects depth of field? <br> - Many... </h3>
+        <p>Depth of field depends on aperture, focus distance, focal length and circle of confusion (CoC). The latter depends on camera sensor size, final image print size, image viewing distance and viewer's visual acuity, so we won't talk about
+          CoC here. For each camera, like iPhone or Canon EOS 5D II, they have a fixed CoC value.</p>
+
+        <p>Try to play with the simulator, control the focus distance, focal length and aperture to see what happened.</p>
+      </div>
+
+      <div class="row centered">
+        <svg class="diagram" id="diagram2"></svg>
+
+        <p class="note"> Near Point <span class="distanceN" id="distanceN2">986</span> mm | Focus Length <span class="distanceC" id="distanceC2">1000</span> mm | Far Point <span class="distanceF" id="distanceF2">1015</span> mm </p>
+
+        <div class="sliders">
+          <div class="slider sliderFocal" id="sliderFocal2">
+            <p> Focal <span class="valueFocal" id="valueFocal2"></span> mm</p>
+          </div>
+          <div class="slider sliderApeture" id="sliderApeture2">
+            <p> Apeture <span class="valueApeture" id="valueApeture2"></span></p>
+          </div>
+          <div class="slider sliderDistanceC" id="sliderDistanceC2">
+            <p> Distance to person <span class="valueDistanceC" id="valueDistanceC2"></span> mm</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ten columns offset-by-one alpha">
+        <h3>How to apply DoF? <br> - Have a try here... </h3>
+        <p>I designed a quick model for you with shrub, a person and some trees. Still remember the photo you see in the front, try to control the DoF to get a focus view on the person, but not on shrub and the trees. </p>
+
+        <p>Cheatsheet here: <br><span>Produce more DoF: small apertures (f/8-f/22), short focal lengths (10-35mm), longer focus distances. <br>Produce less DoF: wide apertures (f/1.4-f/5.6), long focal lengths (70-600mm), short focus distances.</span></p>
+      </div>
+
+      <div class="row centered">
+        <svg class="diagram" id="diagram3"></svg>
+
+        <p class="note"> Near Point <span class="distanceN" id="distanceN3">986</span> mm | Focus Length <span class="distanceC" id="distanceC3">1000</span> mm | Far Point <span class="distanceF" id="distanceF3">1015</span> mm </p>
+
+        <div class="sliders">
+          <div class="slider sliderFocal" id="sliderFocal3">
+            <p> Focal <span class="valueFocal" id="valueFocal3"></span> mm</p>
+          </div>
+          <div class="slider sliderApeture" id="sliderApeture3">
+            <p> Apeture <span class="valueApeture" id="valueApeture3"></span></p>
+          </div><br>
+          <div class="slider sliderDistanceN" id="sliderDistanceN3">
+            <p> Distance to shrub <span class="valueDistanceN" id="valueDistanceN3"></span> mm</p>
+          </div>
+          <div class="slider sliderDistanceC" id="sliderDistanceC3">
+            <p> Distance to person <span class="valueDistanceC" id="valueDistanceC3"></span> mm</p>
+          </div>
+          <div class="slider sliderDistanceF" id="sliderDistanceF3">
+            <p> Distance to tree <span class="valueDistanceF" id="valueDistanceF3"></span> mm</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ten columns offset-by-one alpha">
+        <h3>References</h3>
+
+        <p><a class="note" href="https://idyll-lang.org/gallery/how-does-the-eye-work">The Eye</a> </p>
+        <p><a class="note" href="https://www.photopills.com/articles/ultimate-guide-depth-field">The Ultimate Photography Guide to Depth of Field (DoF)</a> </p>
+        <p><a class="note" target="_blank" href="https://www.vexels.com/vectors/preview/151906/park-shrub-icon"> Park shrub icon | Designed by Vexels.com</a></p>
+        <p> <a class="note" href="https://www.vexels.com/vectors/preview/144817/beard-man-illustration">
+            Beard man illustration | designed by Vexels</a></p>
+      </div>
+
+    </div>
+
 </body>
+
 </html>
