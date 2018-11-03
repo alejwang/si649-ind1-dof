@@ -250,7 +250,10 @@ function drawDiagram(name, update) {
     if (name == '1') {
       var sceneF = svg.select('.sceneF')
         .transition().duration(100).delay(0)
-        // .attr('r', 10) .attr('fill', "#666")
+        .attr('fill', function(){
+          if ((distanceSetF <= farPoint) && (distanceSetF >= nearPoint)) {return '#4D82C1'; }
+          else {return '#666'; }
+        })
         .attr('cx', dX(distanceSetF) - 5).attr('cy', 200);
     }
 
