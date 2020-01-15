@@ -109,7 +109,10 @@
       <div class="row centered">
         <svg class="diagram" id="diagram3"></svg>
 
-        <p class="note"> Near Point <span class="distanceN" id="distanceN3">986</span> mm | Focus Length <span class="distanceC" id="distanceC3">1000</span> mm | Far Point <span class="distanceF" id="distanceF3">1015</span> mm </p>
+        <p class="note"> Near Point <span class="distanceN" id="distanceN3">986</span> mm | Focus Length <span class="distanceC" id="distanceC3">1000</span> mm | Far Point <span class="distanceF" id="distanceF3">1015</span> mm  <br/>
+        <span class="formularExplain">PERFECT! Great portrait with clear person and vague trees.</span>
+      </p>
+
 
         <div class="sliders">
           <div class="slider sliderFocal" id="sliderFocal3">
@@ -126,6 +129,94 @@
           </div>
           <div class="slider sliderDistanceF" id="sliderDistanceF3">
             <p> Distance to tree <span class="valueDistanceF" id="valueDistanceF3"></span> mm</p>
+          </div>
+        </div>
+
+        <div class="calculation row">
+
+          <div class="formularBox">
+            <div class="formularHead">Hyper Focal Length (mm) </div>
+            <div class="formularValue">
+              <div class="focalValue">50</div>
+              <div class="formularName">Focal</div> 
+            </div>
+            *
+            <div class="formularValue">
+              <div class="focalValue">50</div>
+              <div class="formularName">Focal</div> 
+            </div>
+            / (
+            <div class="formularValue">
+              <div class="apertureValue">1.4</div>
+              <div class="formularName">Aperture</div> 
+            </div>
+            *
+            <div class="formularValue">
+              <div class="cocValue">0.0029</div>
+              <div class="formularName">CoC</div> 
+            </div>
+            )
+            <div class="formularResult hyperFocal">61576</div>
+          </div>
+
+          <div class="formularBox">
+            <div class="formularHead">Near Point (mm) </div>
+            <div class="formularValue">
+              <div class="hyperFocal">61657</div>
+              <div class="formularName">Hyperfocal</div> 
+            </div>
+            *
+            <div class="formularValue">
+              <div class="distanceC">1000</div>
+              <div class="formularName">Distance</div> 
+            </div>
+            / (
+            <div class="formularValue">
+              <div class="hyperFocal">61657</div>
+              <div class="formularName">Hyperfocal</div> 
+            </div>
+            +
+            <div class="formularValue">
+              <div class="distanceC">1000</div>
+              <div class="formularName">Distance</div> 
+            </div>
+            -
+            <div class="formularValue">
+              <div class="focalValue">50</div>
+              <div class="formularName">Focal</div> 
+            </div>
+            )
+            <div class="formularResult distanceN">984 </div>
+          </div>
+
+          <div class="formularBox">
+            <div class="formularHead">Far Point (mm)</div>
+            <div class="formularValue">
+              <div class="hyperFocal">61657</div>
+              <div class="formularName">Hyperfocal</div> 
+            </div>
+            *
+            <div class="formularValue">
+              <div class="distanceC">1000</div>
+              <div class="formularName">Distance</div> 
+            </div>
+            / (
+            <div class="formularValue">
+              <div class="hyperFocal">61657</div>
+              <div class="formularName">Hyperfocal</div> 
+            </div>
+            -
+            <div class="formularValue">
+              <div class="distanceC">1000</div>
+              <div class="formularName">Distance</div> 
+            </div>
+            -
+            <div class="formularValue">
+              <div class="focalValue">50</div>
+              <div class="formularName">Focal</div> 
+            </div>
+            )
+            <div class="formularResult distanceF">1015</div>
           </div>
         </div>
       </div>

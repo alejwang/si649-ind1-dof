@@ -56,14 +56,26 @@ function calculateData() {
     farPoint = 9999;
   }
 
+
+  d3.selectAll(".focalValue").text(parseInt(focal)); 
+  d3.selectAll(".apetureValue").text(parseInt(apeture));  
+
+  d3.selectAll(".hyperFocal").text(parseInt(hyperFocal));
   d3.selectAll(".distanceC").text(parseInt(distanceSetC));
   d3.selectAll(".distanceN").text(parseInt(nearPoint));
   d3.selectAll(".distanceF").text(parseInt(farPoint));
+
+  if ((farPoint < distanceSetF) && (nearPoint > distanceSetN)) {
+    d3.select(".formularExplain").attr('class', 'formularExplain correct').text("PERFECT! Great portrait with clear person and vague trees.");
+
+  } else {
+    d3.select(".formularExplain").attr('class', 'formularExplain wrong').text("Ohh no... Try to make the trees vague a little.")
+  }
 }
 
 
 function init(name) {
-  var sliderDistanceC = d3.sliderHorizontal().min(500).max(3000)
+  var sliderDistanceC = d3.sliderHorizontal().min(500).max(2000)
     .width(225).step(10).ticks(0).default(1000)
     .on('onchange', val => {
       d3.selectAll(".valueDistanceC").text(val);
@@ -85,7 +97,7 @@ function init(name) {
   d3.select("span#valueDistanceC" + name).text(sliderDistanceC.value())
 
 
-  var sliderDistanceF = d3.sliderHorizontal().min(1000).max(3000)
+  var sliderDistanceF = d3.sliderHorizontal().min(1500).max(3000)
     .width(225).step(10).ticks(0).default(3000)
     .on('onchange', val => {
       d3.selectAll(".valueDistanceF").text(val);
@@ -169,14 +181,14 @@ function drawDiagram(name, update) {
     svg.select('#blurLevelN')
     .transition().duration(100).delay(100)
     .attr("stdDeviation", function(){
-      if (distanceSetN >= nearPoint) { return 0; }
+      if ((distanceSetF <= farPoint) && (distanceSetN >= nearPoint)) { return 0; }
       else { return (nearPoint - distanceSetN ) / nearPoint * 3; }
     });
 
     svg.select('#blurLevelF')
     .transition().duration(100).delay(100)
     .attr("stdDeviation", function(){
-      if (distanceSetF <= farPoint) { return 0; }
+      if ((distanceSetF <= farPoint) && (distanceSetF <= farPoint)) { return 0; }
       else { return (distanceSetF - farPoint) / farPoint * 3; }
     });
 

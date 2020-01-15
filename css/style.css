@@ -52,10 +52,10 @@ img {
 }
 
 .sliders p{
-  margin: 0;
+  margin: -20px 0;
 }
 .slider {
-  height: 120px;
+  height: 100px;
   display: inline-block;
   /* margin-bottom: -30px; */
 }
@@ -150,4 +150,44 @@ h6 {
 
 .highlight{
     fill: #404040 !important;
+}
+
+.calculation{
+    background: #eee;
+    padding: 18px;
+}
+
+.formularBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+.formularValue{
+    display: flex;
+    padding: 18px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.formularName{
+    font-size: 0.8em;
+    opacity: 0.5;
+}
+
+.formularHead::after, .formularResult::before {
+    content: "=";
+    padding: 18px;
+}
+
+.formularExplain.wrong {
+    color: red;
+}
+
+.formularExplain.correct{
+    color: green;
 }
